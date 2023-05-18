@@ -1,6 +1,7 @@
-package com.ada.unittest.pokemontester.service;
+package com.ada.unittest.pokemontester.service.impl;
 
 import com.ada.unittest.pokemontester.model.Pokemon;
+import com.ada.unittest.pokemontester.service.PokemonService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
