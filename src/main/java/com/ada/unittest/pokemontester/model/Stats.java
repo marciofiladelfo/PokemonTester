@@ -10,6 +10,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @JsonIgnoreProperties
 public class Stats {
-	  private int baseStat;
-	  private Stat stat; 
+    private int baseStat;
+    private int effort;
+    private int weight;
+    private Stat stat;
 }

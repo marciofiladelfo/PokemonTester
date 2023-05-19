@@ -1,9 +1,7 @@
 package com.ada.unittest.pokemontester.controller;
 
 import com.ada.unittest.pokemontester.model.battle.PokemonBattleRequest;
-import com.ada.unittest.pokemontester.model.battle.PokemonBattleResponse;
 import com.ada.unittest.pokemontester.service.PokemonBattleService;
-import com.ada.unittest.pokemontester.service.PokemonService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,8 +17,23 @@ public class PokemonBattleController {
     private final PokemonBattleService pokemonBattleService;
 
     @PostMapping("/battle")
-    public ResponseEntity<PokemonBattleResponse> battlePokemon(@RequestBody PokemonBattleRequest request) {
-        var result = pokemonBattleService.getComparisonPokemon(request);
-        return ResponseEntity.ok(result);
+    public ResponseEntity<String> comparePokemon(@RequestBody PokemonBattleRequest request) {
+        String challenger = request.getChallenger();
+        String challenged = request.getChallenged();
+
+        int challengerTotalStats = pokemonBattleService.getComparisonPokemon(challenger);
+        int challengedTotalStats = pokemonBattleService.getComparisonPokemon(challenged);
+
+        String winner;
+
+        if (challengerTotalStats > challengedTotalStats) {
+            winner = challenger;
+        } else if (challengerTotalStats < challengedTotalStats) {
+            winner = challenged;
+        } else {
+            winner = "DRAW";
+        }
+
+        return ResponseEntity.ok("{\"winner\": \"" + winner + "\"}");
     }
 }
