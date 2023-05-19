@@ -11,6 +11,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PokemonStatDto {
+
     @JsonProperty("base_stat")
     private int baseStat;
+
 }

@@ -22,10 +22,9 @@ public class PokemonBattleServiceImpl implements PokemonBattleService {
         PokemonBattleResponse pokemonResponse = restTemplate.getForObject(apiUrl, PokemonBattleResponse.class);
 
         if (pokemonResponse != null) {
-            int totalStats = pokemonResponse.getStats().stream()
-                    .mapToInt(Stats::getBase_stat)
+            return pokemonResponse.getStats().stream()
+                    .mapToInt(Stats::getBaseStat)
                     .sum();
-            return totalStats;
         }
 
         return 0;
