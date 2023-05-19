@@ -1,9 +1,7 @@
 package com.ada.unittest.pokemontester.model;
 
-import com.ada.unittest.pokemontester.model.*;
 import com.ada.unittest.pokemontester.model.battle.PokemonBattleRequest;
 import com.ada.unittest.pokemontester.model.battle.PokemonBattleResponse;
-import com.ada.unittest.pokemontester.model.battle.PokemonResponseDto;
 import com.ada.unittest.pokemontester.model.battle.PokemonStatDto;
 import com.ada.unittest.pokemontester.model.evolution.PokemonEvolution;
 import org.junit.jupiter.api.Test;
@@ -27,7 +25,6 @@ public class ModelTest {
     @InjectMocks private PokemonEvolution evolution;
     @InjectMocks private PokemonBattleRequest request;
     @InjectMocks private PokemonBattleResponse response;
-    @InjectMocks private PokemonResponseDto responseDto;
     @InjectMocks private PokemonStatDto statDto;
 
     @Test
@@ -103,15 +100,10 @@ public class ModelTest {
 
     @Test
     void testPokemonBattleResponse() {
-        response.setWinner("pikachu");
-        response.getWinner();
+        response.setStats(List.of(stats));
+        response.getStats();
     }
 
-    @Test
-    void testPokemonResponseDto() {
-        responseDto.setStats(List.of(new PokemonStatDto(1)));
-        responseDto.getStats();
-    }
 
     @Test
     void testPokemonStatDto() {
