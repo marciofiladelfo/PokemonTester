@@ -1,5 +1,6 @@
 package com.ada.unittest.pokemontester.model.battle;
 
+import com.ada.unittest.pokemontester.model.Stats;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,5 +13,5 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PokemonBattleResponse {
-    private List<PokemonStat> stats;
+    private List<Stats> stats;
 }

@@ -1,8 +1,10 @@
 package com.ada.unittest.pokemontester.service.impl;
 
+import com.ada.unittest.pokemontester.model.Pokemon;
+import com.ada.unittest.pokemontester.model.Stats;
 import com.ada.unittest.pokemontester.model.battle.PokemonBattleResponse;
-import com.ada.unittest.pokemontester.model.battle.PokemonStat;
 import com.ada.unittest.pokemontester.service.PokemonBattleService;
+import com.ada.unittest.pokemontester.service.PokemonService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -21,7 +23,7 @@ public class PokemonBattleServiceImpl implements PokemonBattleService {
 
         if (pokemonResponse != null) {
             int totalStats = pokemonResponse.getStats().stream()
-                    .mapToInt(PokemonStat::getBaseStat)
+                    .mapToInt(Stats::getBase_stat)
                     .sum();
             return totalStats;
         }
