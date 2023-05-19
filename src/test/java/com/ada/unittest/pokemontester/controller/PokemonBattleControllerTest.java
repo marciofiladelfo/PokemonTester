@@ -1,13 +1,13 @@
 package com.ada.unittest.pokemontester.controller;
 
-import com.ada.unittest.pokemontester.model.Pokemon;
-import com.ada.unittest.pokemontester.service.impl.PokemonServiceImpl;
+import com.ada.unittest.pokemontester.model.battle.PokemonBattleRequest;
+import com.ada.unittest.pokemontester.model.battle.PokemonBattleResponse;
+import com.ada.unittest.pokemontester.service.impl.PokemonBattleServiceImpl;
 import com.ada.unittest.pokemontester.utils.JsonToStringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -18,12 +18,13 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.mockito.Mockito.*;
 
-class PokemonControllerTest {
+public class PokemonBattleControllerTest {
 
     @Mock
-    private PokemonServiceImpl service;
+    private PokemonBattleServiceImpl service;
+
     @InjectMocks
-    private PokemonController controller;
+    private PokemonBattleController controller;
 
     private MockMvc mockMvc;
 
@@ -34,20 +35,20 @@ class PokemonControllerTest {
     }
 
     @Test
-    void testGetPokemonByName() throws Exception {
+    void testPokemonBattleController() throws Exception {
 
-        Pokemon pokemon = new Pokemon();
-        pokemon.setId(1);
-        pokemon.setName("Pikachu");
+        PokemonBattleResponse response = new PokemonBattleResponse("Pikachu");
 
-        Mockito.when(service.getPokemonByName(Mockito.any())).thenReturn(pokemon);
+        when(service.getComparisonPokemon(any())).thenReturn(response);
+
         mockMvc.perform(MockMvcRequestBuilders
-                        .get("/pokemon/pikachu")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(JsonToStringUtils.asJsonString(pokemon)))
+                .post("/pokemon/battle")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonToStringUtils.asJsonString(response)))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andDo(MockMvcResultHandlers.print());
-        verify(service, times(1)).getPokemonByName("pikachu");
+
+        verify(service, times(1)).getComparisonPokemon(any());
 
     }
 

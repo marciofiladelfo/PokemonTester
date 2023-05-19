@@ -8,6 +8,7 @@ class PokemonTesterApplicationTests {
 
 	@Test
 	void contextLoads() {
+		PokemonTesterApplication.main(new String[] {});
 	}
 
 }
