@@ -3,6 +3,7 @@ package com.ada.unittest.pokemontester.service.impl;
 import com.ada.unittest.pokemontester.model.Pokemon;
 import com.ada.unittest.pokemontester.service.PokemonService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -16,7 +17,7 @@ public class PokemonServiceImpl implements PokemonService {
 
     @Override
     public Pokemon getPokemonByName(String name) {
-        String url = BASE_URL + "/pokemon/" + name;
+        String url = BASE_URL + "pokemon/" + name;
         ResponseEntity<Pokemon> response = restTemplate.getForEntity(url, Pokemon.class);
         return response.getBody();
     }

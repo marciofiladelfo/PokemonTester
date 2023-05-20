@@ -62,6 +62,10 @@ public class ModelTest {
         stats.getBaseStat();
         stats.setStat(stat);
         stats.getStat();
+        stats.setEffort(1);
+        stats.getEffort();
+        stats.setWeight(1);
+        stats.getWeight();
     }
 
     @Test
