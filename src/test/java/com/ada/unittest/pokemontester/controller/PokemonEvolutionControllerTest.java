@@ -48,4 +48,18 @@ public class PokemonEvolutionControllerTest {
         verify(service, times(1)).getEvolutionLine("charmander");
     }
 
+    @Test
+    void shouldReturnNotFoundWhenCallingPokemonEvolutionController()  throws Exception {
+
+        PokemonEvolution pokemonEvolution = new PokemonEvolution(List.of("charmander", "charmileaon", "charlizard"));
+
+        when(service.getEvolutionLine(any())).thenReturn(pokemonEvolution);
+        mockMvc.perform(MockMvcRequestBuilders
+                        .get("/pokemon/evolution/charmander")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(JsonToStringUtils.asJsonString(pokemonEvolution)))
+                .andExpect(MockMvcResultMatchers.status().isNotFound())
+                .andDo(MockMvcResultHandlers.print());
+    }
+
 }

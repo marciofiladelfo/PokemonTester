@@ -5,7 +5,6 @@ import com.ada.unittest.pokemontester.model.Stats;
 import com.ada.unittest.pokemontester.model.battle.PokemonBattleResponse;
 import com.ada.unittest.pokemontester.service.impl.PokemonBattleServiceImpl;
 import com.ada.unittest.pokemontester.utils.JsonToStringUtils;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -63,6 +62,29 @@ public class PokemonBattleControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andDo(MockMvcResultHandlers.print());
 
+    }
+
+    @Test
+    void shouldReturnNotFoundWhencallingBattleController() throws Exception {
+        Stat stat = new Stat();
+        stat.setName("hp");
+
+        Stats stats = new Stats();
+        stats.setBaseStat(309);
+        stats.setEffort(1);
+        stats.setStat(stat);
+
+        PokemonBattleResponse pokemonBattleResponse = new PokemonBattleResponse();
+        pokemonBattleResponse.setStats(List.of(stats));
+
+        when(service.getComparisonPokemon(any())).thenReturn(pokemonBattleResponse.getStats().get(0).getBaseStat());
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .post("/pokemon/Test")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(JsonToStringUtils.asJsonString(pokemonBattleResponse)))
+                .andExpect(MockMvcResultMatchers.status().isNotFound())
+                .andDo(MockMvcResultHandlers.print());
     }
 
 }

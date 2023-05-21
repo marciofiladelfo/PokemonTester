@@ -51,4 +51,20 @@ class PokemonControllerTest {
 
     }
 
+    @Test
+    void shouldReturnNotFoundWhenCallingPokemonController() throws Exception {
+        Pokemon pokemon = new Pokemon();
+        pokemon.setId(1);
+        pokemon.setName("Pikachu");
+
+        Mockito.when(service.getPokemonByName(Mockito.any())).thenReturn(pokemon);
+        mockMvc.perform(MockMvcRequestBuilders
+                        .get("/pokemon/")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(JsonToStringUtils.asJsonString(pokemon)))
+                .andExpect(MockMvcResultMatchers.status().isNotFound())
+                .andDo(MockMvcResultHandlers.print());
+    }
+
+
 }
