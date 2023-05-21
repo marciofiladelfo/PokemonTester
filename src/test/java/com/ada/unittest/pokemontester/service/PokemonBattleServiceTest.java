@@ -45,7 +45,7 @@ public class PokemonBattleServiceTest {
         PokemonBattleResponse response = new PokemonBattleResponse();
         response.setStats(List.of(stats));
 
-        Mockito.when(template.getForObject("https://pokeapi.co/api/v2/pokemon/charmander" , PokemonBattleResponse.class)).thenReturn(null);
+        Mockito.when(template.getForObject("https://pokeapi.co/api/v2/pokemon/charmander" , PokemonBattleResponse.class)).thenReturn(response);
         int expectedResponse = service.getComparisonPokemon("charmander");
 
         Assertions.assertEquals(expectedResponse, response.getStats().get(0).getBaseStat());
