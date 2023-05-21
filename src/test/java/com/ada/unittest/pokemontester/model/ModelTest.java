@@ -111,6 +111,11 @@ public class ModelTest {
 
     @Test
     void testPokemonStatDto() {
+        statDto = new PokemonStatDto(1);
+        statDto.getBaseStat();
+    }
+    @Test
+    void testSetPokemonStatDto() {
         statDto.setBaseStat(1);
         statDto.getBaseStat();
     }

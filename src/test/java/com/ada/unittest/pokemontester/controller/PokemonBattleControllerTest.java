@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -30,6 +31,7 @@ public class PokemonBattleControllerTest {
     @InjectMocks
     private PokemonBattleController controller;
 
+    @Autowired
     private MockMvc mockMvc;
 
     @BeforeEach
@@ -42,28 +44,24 @@ public class PokemonBattleControllerTest {
     void testPokemonBattleController() throws Exception {
 
         Stat stat = new Stat();
-        stat.setName("Test");
+        stat.setName("hp");
 
         Stats stats = new Stats();
-        stats.setBaseStat(1);
+        stats.setBaseStat(309);
+        stats.setEffort(1);
         stats.setStat(stat);
-        stats.setWeight(89);
-        stats.setEffort(0);
-//        PokemonBattleResponse response = new PokemonBattleResponse(List.of(stats));
 
-        String response = "{\"winner\":\"DRAW\"}";
+        PokemonBattleResponse pokemonBattleResponse = new PokemonBattleResponse();
+        pokemonBattleResponse.setStats(List.of(stats));
 
-        when(service.getComparisonPokemon(any())).thenReturn(0);
+        when(service.getComparisonPokemon(any())).thenReturn(pokemonBattleResponse.getStats().get(0).getBaseStat());
 
         mockMvc.perform(MockMvcRequestBuilders
                 .post("/pokemon/battle")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(JsonToStringUtils.asJsonString(response)))
-                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .content(JsonToStringUtils.asJsonString(pokemonBattleResponse)))
+                .andExpect(MockMvcResultMatchers.status().isOk())
                 .andDo(MockMvcResultHandlers.print());
-
-        Assertions.assertTrue(true);
-//        verify(service, times(1)).getComparisonPokemon(null);
 
     }
 
